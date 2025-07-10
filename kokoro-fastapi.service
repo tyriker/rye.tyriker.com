@@ -1,0 +1,15 @@
+[Unit]
+Description=Kokoro FastAPI Service
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/ec2-user/Kokoro-FastAPI
+ExecStartPre=uv venv
+ExecStart=./start-cpu.sh
+ExecStop=/bin/kill -HUP $MAINPID
+Restart=always
+User=ec2-user
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,16 @@
+[Unit]
+Description=OpenAI Edge TTS Service
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/ec2-user/openai-edge-tts
+ExecStartPre=/home/ec2-user/.local/bin/uv venv
+ExecStartPre=/home/ec2-user/.local/bin/uv pip install --requirements requirements.txt
+ExecStart=/home/ec2-user/.local/bin/uv run app/server.py
+ExecStop=/bin/kill -HUP $MAINPID
+Restart=always
+User=ec2-user
+
+[Install]
+WantedBy=multi-user.target
